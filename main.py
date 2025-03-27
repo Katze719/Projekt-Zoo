@@ -1,12 +1,12 @@
 import sys
 from PySide6 import QtWidgets, QtCore
 from PySide6.QtWidgets import (
-    QDialog, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit, QPushButton, QMessageBox, QListWidget, QTextEdit, QTableWidget, QTableWidgetItem, QApplication,
+    QDialog, QVBoxLayout, QMenuBar, QMenu, QHBoxLayout, QLabel, QLineEdit, QPushButton, QMessageBox, QListWidget, QTextEdit, QTableWidget, QTableWidgetItem, QApplication, QHeaderView
 )
-from PySide6.QtGui import QIcon
+from PySide6.QtGui import QIcon, QAction
 from helpers import login, addEmployee
 
-from qt_material import apply_stylesheet
+from qt_material import apply_stylesheet, list_themes
 
 
 # Änderungen im MainWindow (nur der relevante Code)
@@ -76,6 +76,28 @@ class MainWindow(QtWidgets.QMainWindow):
 
         main_layout.addWidget(splitter)
 
+        # Standardwerte für Einstellungen
+        self.current_theme = "light_blue.xml"
+
+        # Menüleiste erstellen
+        self.menu_bar = QMenuBar(self)
+        main_layout.setMenuBar(self.menu_bar)
+
+        self.settings_menu = QMenu("Settings", self)
+        self.menu_bar.addMenu(self.settings_menu)
+
+        self.theme_menu = QMenu("Select Theme", self)
+        self.settings_menu.addMenu(self.theme_menu)
+
+        # Verfügbare Themes laden
+        self.available_themes = list_themes()
+
+        # Themes als Menüeinträge hinzufügen
+        for theme in self.available_themes:
+            theme_action = QAction(theme, self)
+            theme_action.triggered.connect(lambda checked, t=theme: self.apply_theme(t))
+            self.theme_menu.addAction(theme_action)
+
     def open_add_employee_dialog(self):
         dialog = addEmployee.AddEmployeeDialog(self.db_connector, self)
         dialog.exec()
@@ -111,6 +133,17 @@ class MainWindow(QtWidgets.QMainWindow):
             for col_idx, cell in enumerate(row):
                 self.result_table.setItem(row_idx, col_idx, QTableWidgetItem(str(cell)))
         self.result_table.resizeColumnsToContents()
+
+    def apply_theme(self, theme_name):
+        """Wendet das ausgewählte Theme an und erkennt helle Themes."""
+        self.current_theme = theme_name
+
+        # Prüfen, ob es sich um ein "light"-Theme handelt
+        if "light" in theme_name:
+            apply_stylesheet(self.window(), theme_name, invert_secondary=True)
+        else:
+            apply_stylesheet(self.window(), theme_name)
+
 
     def load_views(self):
         query = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.VIEWS;"
