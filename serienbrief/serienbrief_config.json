@@ -1,0 +1,26 @@
+{
+  "db_config": {
+    "driver": "ODBC Driver 17 for SQL Server",
+    "server": "(localdb)\\mssqllocaldb",
+    "database": "Zoo_new",
+    "auth_type": "Windows Authentication",
+    "username": null,
+    "password": null
+  },
+  "serienbriefe": [
+    {
+      "name": "Serienbrief1",
+      "query": "SELECT * FROM Mitarbeiter_Ort;",
+      "template": "./templates/template1.html",
+      "mapping": {
+        "mitarbeiter_id": 0,
+        "name": 1,
+        "vorname": 2,
+        "strasse": 3,
+        "plz": 4,
+        "ort": 5
+      },
+      "paper_format": "Letter"
+    }
+  ]
+}

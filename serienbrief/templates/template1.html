@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Seriendruck - {name} {vorname}</title>
+    <style>
+        @page {{
+            size: {paper_format};
+            margin: 2cm;
+        }}
+        body {{
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }}
+        .letter {{
+            width: 100%;
+            padding: 2cm;
+            box-sizing: border-box;
+        }}
+        .address {{
+            margin-bottom: 2cm;
+        }}
+        .content {{
+            margin-top: 2cm;
+        }}
+    </style>
+</head>
+<body>
+    <div class="letter">
+        <div class="address">
+            <p><strong>Mitarbeiter_ID:</strong> {mitarbeiter_id}</p>
+            <p><strong>Name:</strong> {name}</p>
+            <p><strong>Vorname:</strong> {vorname}</p>
+            <p><strong>Strasse:</strong> {strasse}</p>
+            <p><strong>PLZ:</strong> {plz}</p>
+            <p><strong>Ort:</strong> {ort}</p>
+        </div>
+        <div class="content">
+            <p>Sehr geehrte/r {vorname} {name},</p>
+            <p>im Folgenden erhalten Sie Ihre personalisierten Informationen.</p>
+            <!-- Weitere Inhalte -->
+        </div>
+    </div>
+</body>
+</html>
