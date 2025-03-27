@@ -64,17 +64,28 @@ class MainWindow(QtWidgets.QMainWindow):
         query_panel.setLayout(query_layout)
         right_splitter.addWidget(query_panel)
 
+        # Im Setup des Ergebnisbereichs (innerhalb von setup_ui)
         result_panel = QtWidgets.QWidget()
-        result_layout = QtWidgets.QVBoxLayout(result_panel)
+        result_layout = QVBoxLayout(result_panel)
+
+        # Suchfeld hinzufügen
+        self.search_line_edit = QLineEdit()
+        self.search_line_edit.setPlaceholderText("Suche in Tabelle...")
+        result_layout.addWidget(self.search_line_edit)
+        self.search_line_edit.textChanged.connect(self.filter_table)
+
+        # Tabelle hinzufügen
         self.result_table = QTableWidget()
         result_layout.addWidget(self.result_table)
         result_panel.setLayout(result_layout)
         right_splitter.addWidget(result_panel)
+
         right_splitter.setSizes([150, 350])
         splitter.addWidget(right_splitter)
         splitter.setStretchFactor(1, 3)
 
         main_layout.addWidget(splitter)
+
 
         # Standardwerte für Einstellungen
         self.current_theme = "light_blue.xml"
@@ -97,6 +108,7 @@ class MainWindow(QtWidgets.QMainWindow):
             theme_action = QAction(theme, self)
             theme_action.triggered.connect(lambda checked, t=theme: self.apply_theme(t))
             self.theme_menu.addAction(theme_action)
+
 
     def open_add_employee_dialog(self):
         dialog = addEmployee.AddEmployeeDialog(self.db_connector, self)
@@ -133,6 +145,18 @@ class MainWindow(QtWidgets.QMainWindow):
             for col_idx, cell in enumerate(row):
                 self.result_table.setItem(row_idx, col_idx, QTableWidgetItem(str(cell)))
         self.result_table.resizeColumnsToContents()
+
+    def filter_table(self, text):
+        # Durch alle Zeilen der Tabelle iterieren
+        for row in range(self.result_table.rowCount()):
+            row_visible = False
+            # Jede Zelle der aktuellen Zeile überprüfen
+            for col in range(self.result_table.columnCount()):
+                item = self.result_table.item(row, col)
+                if item and text.lower() in item.text().lower():
+                    row_visible = True
+                    break
+            self.result_table.setRowHidden(row, not row_visible)
 
     def apply_theme(self, theme_name):
         """Wendet das ausgewählte Theme an und erkennt helle Themes."""
