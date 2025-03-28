@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Seriendruck - {Tiername} ({TierNR})</title>
+    <style>
+        @page {{
+            size: {paper_format};
+            margin: 2cm;
+        }}
+        body {{
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }}
+        .letter {{
+            width: 100%;
+            padding: 2cm;
+            box-sizing: border-box;
+        }}
+        .header {{
+            margin-bottom: 2cm;
+        }}
+        .content {{
+            margin-top: 2cm;
+        }}
+    </style>
+</head>
+<body>
+    <div class="letter">
+        <div class="header">
+            <p><strong>Tiernummer:</strong> {TierNR}</p>
+            <p><strong>Name des Tieres:</strong> {Tiername}</p>
+            <p><strong>Art:</strong> {Tierart}</p>
+            <p><strong>Biologische Klasse:</strong> {Klassenname}</p>
+        </div>
+        <div class="content">
+            <p>Sehr geehrte Damen und Herren,</p>
+            <p>im Folgenden finden Sie die Informationen zu einem Tier der Klasse <strong>{Klassenname}</strong>:</p>
+            <ul>
+                <li><strong>Tiernummer:</strong> {TierNR}</li>
+                <li><strong>Name:</strong> {Tiername}</li>
+                <li><strong>Art:</strong> {Tierart}</li>
+            </ul>
+            <p>Bitte beachten Sie die spezifischen Anforderungen und Merkmale dieser Tierklasse bei der weiteren Betreuung oder Dokumentation.</p>
+        </div>
+    </div>
+</body>
+</html>

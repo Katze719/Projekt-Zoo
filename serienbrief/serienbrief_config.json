@@ -21,6 +21,18 @@
         "ort": 5
       },
       "paper_format": "Letter"
+    },
+    {
+      "name": "Serienbrief2",
+      "query": "SELECT * FROM Tiere_Art_Klasse;",
+      "template": "./templates/template2.html",
+      "mapping": {
+        "TierNR": 0,
+        "Tiername": 1,
+        "Tierart": 2,
+        "Klassenname": 3
+      },
+      "paper_format": "A4"
     }
   ]
 }
