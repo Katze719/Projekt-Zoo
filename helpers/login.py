@@ -31,7 +31,7 @@ class LoginDialog(QDialog):
         # Datenbank-Eingabe
         db_layout = QHBoxLayout()
         db_label = QLabel("Database:")
-        self.db_edit = QLineEdit("ZOO_DB")
+        self.db_edit = QLineEdit("Zoo_new")
         db_layout.addWidget(db_label)
         db_layout.addWidget(self.db_edit)
         layout.addLayout(db_layout)

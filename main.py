@@ -80,7 +80,7 @@ class MainWindow(QtWidgets.QMainWindow):
         result_panel.setLayout(result_layout)
         right_splitter.addWidget(result_panel)
 
-        right_splitter.setSizes([150, 350])
+        right_splitter.setSizes([0, 500])
         splitter.addWidget(right_splitter)
         splitter.setStretchFactor(1, 3)
 
